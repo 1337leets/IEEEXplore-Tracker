@@ -1,4 +1,4 @@
-# ieee-xplore-tracker
+# IEEEXplore-Tracker
 
 Automated daily IEEE Xplore paper tracker for Android using Termux and Tasker.
 
@@ -8,11 +8,11 @@ Fetches new papers by keyword every morning, saves a dated HTML report, and send
 
 ## How It Works
 
-1. Tasker triggers the script at 09:00 every day
-2. `tracker.py` reads keywords from `config.json` and queries the IEEE Xplore API
-3. Results are saved as a dated HTML report (`results/YYYY-MM-DD.html`)
-4. A notification is sent — tap it to open the report in your browser
-5. Reports older than 7 days are automatically deleted
+1. Tasker triggers the script at 09:00 every day.
+2. `tracker.py` reads keywords from `config.json` and queries the IEEE Xplore API.
+3. Results are saved as a dated HTML report (`results/YYYY-MM-DD.html`).
+4. A notification is sent — tap it to open the report in your browser.
+5. Reports older than 7 days are automatically deleted.
 
 ---
 
@@ -38,8 +38,8 @@ pip install requests
 ### 2. Clone the repo
 
 ```bash
-git clone https://github.com/1337leets/ieee-xplore-tracker
-cd ieee-xplore-tracker
+git clone https://github.com/1337leets/IEEEXplore-Tracker
+cd IEEEXplore-Tracker
 ```
 
 ### 3. Configure
@@ -50,9 +50,9 @@ Edit `config.json`:
 {
   "api_key": "YOUR_API_KEY_HERE",
   "keywords": [
-    "hydrogen microgrid",
-    "real-time simulation HIL",
-    "microgrid energy management"
+    "KEYWORD1",
+    "KEYWORD2",
+    "KEYWORD3"
   ],
   "max_results": 5,
   "days_back": 1,
@@ -78,7 +78,7 @@ python tracker.py
 
 **Option A — Import (recommended):**
 
-A ready-to-use Tasker profile is included: `ieee_tracker_tasker.xml`
+A ready-to-use Tasker profile is included: `IEEEXplore_Tracker.prf.xml`
 
 In Tasker: Long press on Profiles → Import → select the file.
 
@@ -88,8 +88,8 @@ In Tasker: Long press on Profiles → Import → select the file.
 2. Create a new **Task** → **Plugin** → **Termux:Tasker**
 3. Set:
    - **Executable:** `/data/data/com.termux/files/usr/bin/python3`
-   - **Arguments:** `/data/data/com.termux/files/home/ieee-xplore-tracker/tracker.py`
-   - **Working directory:** `/data/data/com.termux/files/home/ieee-xplore-tracker`
+   - **Arguments:** `/data/data/com.termux/files/home/IEEEXplore-Tracker/tracker.py`
+   - **Working directory:** `/data/data/com.termux/files/home/IEEEXplore-Tracker`
    - **Timeout:** 60 seconds
 4. Link the task to the profile
 
@@ -115,7 +115,7 @@ In Tasker: Long press on Profiles → Import → select the file.
 
 ## Status
 
-Tested on: Android 10, Termux 0.118, Python 3.11  
+Tested on: Android 13, Termux 0.118.3, Python 3.11  
 API key activation and full end-to-end notification flow pending final test.
 
 ---
