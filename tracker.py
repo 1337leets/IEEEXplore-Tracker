@@ -49,10 +49,10 @@ def save_results(papers_by_keyword, keep_days):
             f.write(f"[ {keyword} ]\n\n")
             keyword_counts[keyword] = len(papers)
             if not papers:
-                f.write("  Sonuç bulunamadı.\n\n")
+                f.write("  No results found.\n\n")
                 continue
             for p in papers:
-                title = p.get("title", "Başlık yok")
+                title = p.get("title", "No title")
                 authors = p.get("authors", {}).get("authors", [])
                 first_author = authors[0].get("full_name", "?") if authors else "?"
                 year = p.get("publication_year", "?")
@@ -90,10 +90,10 @@ def save_results(papers_by_keyword, keep_days):
         for keyword, papers in papers_by_keyword.items():
             f.write(f"<h2>[ {keyword} ]</h2>\n")
             if not papers:
-                f.write('<p class="empty">Sonuç bulunamadı.</p>\n')
+                f.write('<p class="empty">No results found.</p>\n')
                 continue
             for p in papers:
-                title = p.get("title", "Başlık yok")
+                title = p.get("title", "No title")
                 authors = p.get("authors", {}).get("authors", [])
                 first_author = authors[0].get("full_name", "?") if authors else "?"
                 year = p.get("publication_year", "?")
@@ -107,7 +107,7 @@ def save_results(papers_by_keyword, keep_days):
         f.write(f'<div class="footer">Toplam {total} makale &nbsp;·&nbsp; {today}</div>\n')
         f.write("</body></html>\n")
 
-    # Rolling window — en eski dosyaları sil
+    # Rolling window, delete the oldest files
     for ext in [".txt", ".html"]:
         files = sorted([f for f in os.listdir(RESULTS_DIR) if f.endswith(ext)])
         while len(files) > keep_days:
@@ -118,7 +118,7 @@ def save_results(papers_by_keyword, keep_days):
 
 def send_notification(total, html_path, keyword_counts):
     if total == 0:
-        content = "Bugün yeni makale bulunamadı."
+        content = "No new papers found today."
     else:
         lines = [f"{k}: {v}" for k, v in keyword_counts.items() if v > 0]
         content = "\n".join(lines)
@@ -141,7 +141,7 @@ def main():
     keep_days = config.get("keep_days", 7)
 
     if api_key == "YOUR_API_KEY_HERE":
-        print("config.json içindeki api_key alanını doldur.")
+        print("Fill in the api_key field in config.json.")
         return
 
     papers_by_keyword = {}
@@ -150,7 +150,7 @@ def main():
 
     html_path, total, keyword_counts = save_results(papers_by_keyword, keep_days)
     send_notification(total, html_path, keyword_counts)
-    print(f"Tamamlandı. {total} makale → {html_path}")
+    print(f"Done. {total} papers -> {html_path}")
 
 if __name__ == "__main__":
     main()
